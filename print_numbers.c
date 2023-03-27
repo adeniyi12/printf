@@ -88,13 +88,13 @@ int print_octal(va_list args)
 		return (write(1, "0", 1));
 
 
-		while (num != 0)
-		{
-			buffer[i--] = (num % 8) + '0';
-			num /= 8;
-			count++;
-		}
-		i++;
+	while (num != 0)
+	{
+		buffer[i--] = (num % 8) + '0';
+		num /= 8;
+		count++;
+	}
+	i++;
 
 	return (write(1, &buffer[i], count));
 
@@ -108,11 +108,11 @@ int print_octal(va_list args)
 
 int print_hex(va_list args)
 {
-	int j, a, n = 0;
-	int i = BUFF_SIZE - 2;
+	/*int j, a, n = 0;*/
+	int n, i = BUFF_SIZE - 2;
 	char buffer[BUFF_SIZE];
 	int count = 0;
-	int hex_num[] = {10, 11, 12, 13, 14, 15};
+	/*int hex_num[] = {10, 11, 12, 13, 14, 15};*/
 	char *hex_char = "abcdef";
 	unsigned int num = va_arg(args, unsigned int);
 
