@@ -1,36 +1,51 @@
 #include "main.h"
 
 /**
- * check_specifier - check that character is a valid specifier and
- * assigns an appropriate fucntion for its printing.
- * @format: the specifier (char*)
- *
- * Return: pointer to function, if successful
- * NULL pointer if not successful
+ * handle_print - handle the specifications of specifier
+ * @fmt: format
+ * @ind: format index
+ * @list: argument list
+ * @buffer: buffer array
+ * Return: function
+ * @flags: flags
+ * @width: width
+ * @precision: precision,
+ * @size: size
  */
 
-int (*check_specifier(const char *format))(va_list)
+int handle_print(const char *fmt, int *ind, va_list list, char buffer[],
+	int flags, int width, int precision, int size)
 {
-	int i;
+	int i, unknow_len = 0, printed_chars = -1;
+	fmt_t fmt_types[] = {
+		{'c', print_char}, {'s', print_string}, {'%', print_percent},
+		{'i', print_int}, {'d', print_int}, {'b', print_binary},
+		{'u', print_unsigned}, {'o', print_octal}, {'x', print_hexadecimal},
+		{'X', print_hexa_upper}, {'p', print_pointer}, {'S', print_non_printable},
+		{'r', print_reverse}, {'R', print_rot13string}, {'\0', NULL}
+	};
+	for (i = 0; fmt_types[i].fmt != '\0'; i++)
+		if (fmt[*ind] == fmt_types[i].fmt)
+			return (fmt_types[i].fn(list, buffer, flags, width, precision, size));
 
-	func_t my_array[] = {
-		{"c", print_char},
-		{"s", print_str},
-		{"%", print_cent},
-		{"i", print_int},
-		{"d", print_int},
-		{"u", print_unsigned},
-		{"o", print_octal},
-		{"x", print_hex},
-		{NULL, NULL}};
-
-	for (i = 0; my_array[i].t != NULL; i++)
+	if (fmt_types[i].fmt == '\0')
 	{
-		if (*(my_array[i].t) == *format)
+		if (fmt[*ind] == '\0')
+			return (-1);
+		unknow_len += write(1, "%%", 1);
+		if (fmt[*ind - 1] == ' ')
+			unknow_len += write(1, " ", 1);
+		else if (width)
 		{
-			return (my_array[i].f);
+			--(*ind);
+			while (fmt[*ind] != ' ' && fmt[*ind] != '%')
+				--(*ind);
+			if (fmt[*ind] == ' ')
+				--(*ind);
+			return (1);
 		}
+		unknow_len += write(1, &fmt[*ind], 1);
+		return (unknow_len);
 	}
-
-	return (NULL);
+	return (printed_chars);
 }
