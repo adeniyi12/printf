@@ -1,3 +1,16 @@
+#include "main.h"
+
+/**
+ * print_int - print_int
+ * @types: list
+ * @buffer: buffer[],
+ * @flags: flags,
+ * @width: width,
+ * @precision: precision,
+ * @size: size)
+ * Return: int
+ */
+
 int print_int(va_list types, char buffer[],
 	int flags, int width, int precision, int size)
 {
@@ -31,9 +44,16 @@ int print_int(va_list types, char buffer[],
 	return (write_number(is_negative, i, buffer, flags, width, precision, size));
 }
 
-
-
-
+/**
+ * print_unsigned - print_int
+ * @types: list
+ * @buffer: buffer
+ * @flags: flags,
+ * @width: width,
+ * @precision: precision,
+ * @size: size
+ * Return: int
+ */
 
 int print_unsigned(va_list types, char buffer[],
 	int flags, int width, int precision, int size)
@@ -59,7 +79,16 @@ int print_unsigned(va_list types, char buffer[],
 	return (write_unsgnd(0, i, buffer, flags, width, precision, size));
 }
 
-
+/**
+ * print_octal - print_in
+ * @types: list
+ * @buffer: buffer
+ * @flags: flags,
+ * @width: widt
+ * @precision: precision,
+ * @size: size
+ * Return: int
+ */
 
 int print_octal(va_list types, char buffer[],
 	int flags, int width, int precision, int size)
@@ -92,8 +121,16 @@ int print_octal(va_list types, char buffer[],
 	return (write_unsgnd(0, i, buffer, flags, width, precision, size));
 }
 
-
-
+/**
+ * print_octal - print octal
+ * @types: list
+ * @buffer: buffer
+ * @flags: flags,
+ * @width: widt
+ * @precision: precision
+ * @size: size
+ * Return: int
+ */
 
 int print_binary(va_list types, char buffer[],
 	int flags, int width, int precision, int size)
